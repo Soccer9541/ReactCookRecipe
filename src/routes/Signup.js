@@ -126,7 +126,6 @@ function Signup(){
         <form action="">
           <h1 className={styles.title}>회원가입</h1>
 
-          
           <div>
             <span>프로필</span>
             <input type="file" id="uploadFile" onChange={(e)=>{e.preventDefault();사진미리보기(e)}} />
@@ -134,7 +133,6 @@ function Signup(){
               {imageSrc && <img src={imageSrc} alt="Preview" />}
             </div>
           </div>
-
 
           <div>
             <span>이름</span>
@@ -152,10 +150,12 @@ function Signup(){
             <span>비밀번호(8~10자리사이 영어와 숫자조합)</span>
             <input type="password" name="패스워드" id='pwNew' placeholder="패스워드를 입력하세요." onChange={(e)=>{setPassword(e.target.value);}}/>
           </div>
+
           <div>
             <span>비밀번호확인</span>
             <input type="password" name="패스워드" id='pwConfirmNew' placeholder="패스워드를 다시 한 번 입력하세요." onChange={(e)=>{setPasswordConfirm(e.target.value);}}/>
           </div>
+          
           <button type="submit" className="btn btn-outline" onClick={(e)=>{e.preventDefault();회원가입()}}>회원가입하기</button>
         </form>
       </div>
