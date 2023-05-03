@@ -1,8 +1,8 @@
 import styles from './Upload.module.css';
 import MenuList from '../menulist/MenuList';
 import { db } from '../firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { getAuth,onAuthStateChanged } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 function Upload(){
@@ -13,7 +13,7 @@ function Upload(){
   
   let 전송 = async function(){
     try {
-      const docRef = await addDoc(collection(db, "post"), {
+      await addDoc(collection(db, "post"), {
         title : document.querySelector('#title').value,
         category : document.querySelector('#category').value,
         content : document.querySelector('#content').value,
