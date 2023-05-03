@@ -47,7 +47,7 @@ function Upload(){
             {
               MenuList.map((a,i)=>{
                 return(
-                  <option value={a.title} key={i}>{MenuList[i].title}</option>
+                  <option value={a.route} key={i}>{MenuList[i].title}</option>
                 )
               })
             }

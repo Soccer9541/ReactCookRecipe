@@ -58,10 +58,6 @@ function MyPost(){
           
           return (
             <div key={i}>
-              {/* <h1>제목 : {a.title}</h1>
-              <p>카테고리 : {a.category}</p>
-              <p>내용 : {a.content}</p>
-              <p>작성자 : {a.작성자}</p> */}
               <div className={styles.product}>
                 <div className={styles.thumbnail}>
                   <img src='https://via.placeholder.com/350' alt="" />
