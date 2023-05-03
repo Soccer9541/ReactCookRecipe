@@ -16,8 +16,6 @@ function Profile(){
       alert('회원 탈퇴 완료!');
       navigate('/');
     }).catch((error) => {
-      // An error ocurred
-      // ...
       console.log(error)
     });
   }
@@ -43,7 +41,7 @@ function Profile(){
         <div className={styles.myInfo}>
           <div className="avatar p-3 flex justify-center">
             <div className="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto">
-              <img src={photo}/>
+              <img src={photo} alt="프로필사진"/>
             </div>
           </div>
           <div>
