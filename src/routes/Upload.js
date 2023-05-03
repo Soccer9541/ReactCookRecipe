@@ -4,14 +4,59 @@ import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { updateProfile } from 'firebase/auth';
 
 function Upload(){
   
   const auth = getAuth();
   let navigate = useNavigate();
+  const [imageSrc, setImageSrc] = useState(process.env.PUBLIC_URL + '/images/photoDefualt.gif');
+  
+
+  // Firebase Storage 초기화
+  const storage = getStorage();
+
+  let 프로필업데이트 =async function(photoFile) {
+    const user = auth.currentUser;
+
+    // Firebase Storage에 이미지 업로드
+    const storageRef = ref(storage, 'menuProfiles/' + photoFile.name);
+    await uploadBytes(storageRef, photoFile);
+
+    // Firebase Storage에서 이미지 URL 가져오기
+    const photoURL = await getDownloadURL(storageRef);
+
+    // 사용자 프로필 업데이트
+    await updateProfile(user, {
+      photoURL: photoURL
+    });
+
+    console.log('Profile updated successfully!');
+    console.log('Image URL:', photoURL);
+
+  }
+  
+  
+  let 사진미리보기 = function(event){
+    const file = event.target.files[0];
+    
+    if(file==null){
+      setImageSrc(process.env.PUBLIC_URL + '/images/photoDefualt.gif');
+      return
+    }
+    
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageSrc(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
   
   
   let 전송 = async function(){
+    let fileImage = document.querySelector('#recipePhoto').files[0];
     try {
       await addDoc(collection(db, "post"), {
         title : document.querySelector('#title').value,
@@ -21,6 +66,8 @@ function Upload(){
       })
       .then(()=>{
         alert('글 작성 완료!');
+        프로필업데이트(fileImage);
+        setImageSrc(process.env.PUBLIC_URL + '/images/photoDefualt.gif');
         navigate('/');
       });
       
@@ -53,6 +100,15 @@ function Upload(){
             }
           </select>
         </div>
+
+        <div>
+        <p>완성된 요리 사진</p>
+          <input type="file" id="recipePhoto" onChange={(e)=>{e.preventDefault();사진미리보기(e)}} />
+          <div className={styles.profileImg}>
+            {imageSrc && <img src={imageSrc} alt="Preview" />}
+          </div>
+        </div>
+
         <div>
           <p>내용</p>
           <textarea name="content" id="content" placeholder='글 내용' cols="30" rows="10"></textarea>
