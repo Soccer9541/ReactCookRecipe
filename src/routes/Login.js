@@ -2,7 +2,6 @@ import styles from "./Login.module.css";
 import React, { useState,useEffect } from "react";
 import { getAuth,signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login(){
@@ -20,7 +19,7 @@ function Login(){
       alert('이메일 또는 패스워드를 입력해주세요.');
       return;
     }
-    const result = await signInWithEmailAndPassword(auth,email,password)
+    await signInWithEmailAndPassword(auth,email,password)
     .then(()=>{
       alert('로그인 완료');
       setEmail('');
@@ -37,22 +36,8 @@ function Login(){
     signInWithPopup(auth, provider)
       .then((result) => {
         navigate('/')
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
       }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        console.log(error)
       });
   }
 
@@ -69,7 +54,6 @@ function Login(){
 
   return(
     <div>
-      {/* <Navbar></Navbar> */}
       <div className={styles.loginArea}>
         <form>
           <h1 className={styles.title}>집밥의 민족</h1>
