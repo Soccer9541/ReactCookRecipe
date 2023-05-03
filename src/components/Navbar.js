@@ -7,7 +7,7 @@ function Navbar(){
   const auth = getAuth();
   let [userName,setUserName]=useState('');
   let [loginStatus,setLoginStatus] = useState(false);
-  let [photo,setPhoto]=useState(process.env.PUBLIC_URL + '/images/puppy.jpg');
+  let [photo,setPhoto]=useState(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
 
   let 로그아웃 = function(){
     signOut(auth).then((result) => {
@@ -34,7 +34,7 @@ function Navbar(){
       } else{
         setLoginStatus(false);
         setUserName('');
-        setPhoto(process.env.PUBLIC_URL + '/images/puppy.jpg');
+        setPhoto(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
       }
     })
   },[])

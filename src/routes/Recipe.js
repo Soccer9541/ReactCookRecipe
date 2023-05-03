@@ -1,17 +1,15 @@
 import { getAuth } from "firebase/auth";
-import { Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getDocs,collection } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState,useEffect } from "react";
 import styles from './Recipe.module.css';
-import MenuList from '../menulist/MenuList';
+
 
 function Recipe(){
   
   let {category} =useParams();
-  console.log(category);
 
-  const auth = getAuth();
   let [카테고리별글목록,카테고리별글목록설정]=useState([]);
 
   let FB글목록= async function(){
@@ -20,7 +18,6 @@ function Recipe(){
     querySnapshot.forEach((doc) => {
       array.push(doc.data());
     });
-    console.log(array);
     let copy =[...array];
     let myList= copy.filter((item)=>{
       return item.category === category;
@@ -35,7 +32,7 @@ function Recipe(){
   return (
     <div>
       <h2>메뉴 페이지요</h2>
-      <Outlet></Outlet>
+
       {
         카테고리별글목록.map((a,i)=>{
           

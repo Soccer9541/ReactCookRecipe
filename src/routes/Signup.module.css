@@ -12,6 +12,17 @@
   margin-bottom: 20px;
   
 }
+.profileImg{
+  margin-bottom: 20px;
+}
+
+.profileImg *{
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-position: center;
+}
 
 .signupArea select{
   display: block;

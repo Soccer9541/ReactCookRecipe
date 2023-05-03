@@ -1,9 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import 이메일형식체크 from "../functions/idCheck";
+import 패스워드형식체크 from "../functions/pwCheck";
 
 
 function Signup(){
@@ -12,15 +14,10 @@ function Signup(){
   let [passwordConfirm,setPasswordConfirm]= useState('');
   let [userName,setUserName]= useState('');
   let [emailCheck,setEmailCheck] = useState(false);
-  // let [image,setImage] = useState(null);
-
-  const [imageSrc, setImageSrc] = useState(process.env.PUBLIC_URL + '/images/puppy.jpg');
+  const [imageSrc, setImageSrc] = useState(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
 
   let navigate = useNavigate();
   const auth = getAuth();
-
-  
-
 
   // Firebase Storage 초기화
   const storage = getStorage();
@@ -44,15 +41,17 @@ function Signup(){
     console.log('Profile updated successfully!');
     console.log('Image URL:', photoURL);
 
-    // 이미지 표시
-    // const img = document.createElement('img');
-    // img.src = photoURL;
-    // document.body.appendChild(img);
   }
 
 
   let 사진미리보기 = function(event){
     const file = event.target.files[0];
+    
+    if(file==null){
+      setImageSrc(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
+      return
+    }
+    
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageSrc(reader.result);
@@ -61,17 +60,6 @@ function Signup(){
   }
 
 
-
-
-  function 이메일형식체크(asValue) {
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
-  }
-
-  function 패스워드형식체크(asValue) {
-    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/; //  8 ~ 10자 영문, 숫자 조합
-    return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
-  }
 
   // 이메일 중복 검사 함수
   function 이메일중복검사(email) {
@@ -113,7 +101,7 @@ function Signup(){
         setEmailCheck(false);
         setUserName('');
         프로필업데이트(fileImage);
-        setImageSrc(process.env.PUBLIC_URL + '/images/puppy.jpg');
+        setImageSrc(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
       })
       .then(()=>{signOut(auth)});
       alert(result.user.email + '님 회원가입을 축하드립니다!');
@@ -142,7 +130,9 @@ function Signup(){
           <div>
             <span>프로필</span>
             <input type="file" id="uploadFile" onChange={(e)=>{e.preventDefault();사진미리보기(e)}} />
-            {imageSrc && <img src={imageSrc} alt="Preview" />}
+            <div className={styles.profileImg}>
+              {imageSrc && <img src={imageSrc} alt="Preview" />}
+            </div>
           </div>
 
 
