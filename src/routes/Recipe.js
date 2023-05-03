@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import { getDocs,collection } from "firebase/firestore";
 import { db } from "../firebase";
