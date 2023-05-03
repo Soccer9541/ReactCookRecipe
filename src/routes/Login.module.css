@@ -1,0 +1,25 @@
+.loginArea{
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  border: 1px solid green;
+}
+
+
+.title{
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  
+}
+
+.emailInput>input,
+.pwInput>input{
+  padding: 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 10px;
+  border-radius: 1rem;
+  width: 100%;
+}
+

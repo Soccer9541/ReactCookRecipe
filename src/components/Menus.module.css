@@ -1,0 +1,26 @@
+.menusArea{
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top : 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.menusArea img{
+  width: 220px;
+  height: 220px;
+  padding-bottom: 10px;
+}
+
+.menusArea>div{
+  scale :.8;
+  /* margin: 20px; */
+  transition: all .1s;
+}
+
+.menusArea>div:hover{
+  scale: 1;
+}
+

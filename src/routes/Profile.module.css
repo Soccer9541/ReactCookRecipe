@@ -1,0 +1,25 @@
+.profileArea{
+  max-width: 500px;
+  border: 1px solid blue;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.myInfo{
+  border: 1px solid red;
+  
+}
+
+.settings,
+.history{
+  border: 1px solid green;
+  margin-top: 20px;
+  
+}
+
+.settings ul,
+.settings ul li,
+.history ul,
+.history ul li{
+  margin: 0 auto;
+}
