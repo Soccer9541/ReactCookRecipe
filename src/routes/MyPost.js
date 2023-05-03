@@ -12,8 +12,6 @@ function MyPost(){
   let [내글정보,내글정보설정]=useState([]);
   let navigate = useNavigate();
   
-
-
   let FB정보가져오기 = async function(){
     let array =[];
     const querySnapshot = await getDocs(collection(db, "post"));
