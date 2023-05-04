@@ -58,13 +58,14 @@ function MyPost(){
             <div key={i}>
               <div className={styles.product}>
                 <div className={styles.thumbnail}>
-                  <img src='https://via.placeholder.com/350' alt="" />
+                  <img src={a.사진} alt="요리대표사진" />
                 </div>
                 <div className="flex-grow-1 p-4">
                   <h5 className="title"> 제목 : {a.title}</h5>
                   <p>카테고리 : {a.category}</p>
                   <p>내용 : {a.content}</p>
                   <p>작성자 : {a.작성자}</p>
+                  <p>작성일 : {a.작성일}</p>
                 </div>
               </div>
           

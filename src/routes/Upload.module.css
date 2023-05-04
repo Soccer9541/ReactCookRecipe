@@ -24,3 +24,16 @@
   width: 100%;
 }
 
+
+.profileImg{
+  margin: 30px;
+}
+
+.profileImg *{
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-position: center;
+  border: 1px solid gray;
+}

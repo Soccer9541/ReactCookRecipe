@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +81,7 @@ function Signup(){
 
   let 회원가입 = async function(){
     let fileImage = document.querySelector('#uploadFile').files[0];
+    console.log(fileImage)
     if(fileImage==null){
       alert('이미지를 업로드해라 ㅅㄱ');
       return
@@ -116,8 +117,6 @@ function Signup(){
     }
     
   }
-
-
 
 
   return (

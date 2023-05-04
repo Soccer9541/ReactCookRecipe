@@ -2,7 +2,7 @@ import styles from './Upload.module.css';
 import MenuList from '../menulist/MenuList';
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -13,29 +13,23 @@ function Upload(){
   const auth = getAuth();
   let navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState(process.env.PUBLIC_URL + '/images/photoDefualt.gif');
-  
+
+  let [요리대표사진,요리대표사진설정]=useState('');
+  let 날짜 = new Date();
 
   // Firebase Storage 초기화
   const storage = getStorage();
 
-  let 프로필업데이트 =async function(photoFile) {
-    const user = auth.currentUser;
+  let 요리사진 =async function(photoFile) {
 
     // Firebase Storage에 이미지 업로드
     const storageRef = ref(storage, 'menuProfiles/' + photoFile.name);
     await uploadBytes(storageRef, photoFile);
 
     // Firebase Storage에서 이미지 URL 가져오기
-    const photoURL = await getDownloadURL(storageRef);
+    const photoURL = await getDownloadURL(storageRef)
 
-    // 사용자 프로필 업데이트
-    await updateProfile(user, {
-      photoURL: photoURL
-    });
-
-    console.log('Profile updated successfully!');
-    console.log('Image URL:', photoURL);
-
+    return photoURL;
   }
   
   
@@ -57,17 +51,28 @@ function Upload(){
   
   let 전송 = async function(){
     let fileImage = document.querySelector('#recipePhoto').files[0];
+    if(fileImage==null){
+      alert('이미지를 업로드해라 ㅅㄱ');
+      return
+    }
     try {
-      await addDoc(collection(db, "post"), {
-        title : document.querySelector('#title').value,
-        category : document.querySelector('#category').value,
-        content : document.querySelector('#content').value,
-        작성자 : auth.currentUser.uid
+      await 요리사진(fileImage)
+      .then((result)=>{
+        console.log('프로필먼저 업데이트');
+        addDoc(collection(db, "post"), {
+          title : document.querySelector('#title').value,
+          category : document.querySelector('#category').value,
+          content : document.querySelector('#content').value,
+          작성자 : auth.currentUser.uid,
+          작성일 : `${날짜.getFullYear()}년 ${날짜.getMonth()+1}월 ${날짜.getDate()}일`,
+          사진 : result
+        })
       })
       .then(()=>{
         alert('글 작성 완료!');
-        프로필업데이트(fileImage);
+        console.log(2);
         setImageSrc(process.env.PUBLIC_URL + '/images/photoDefualt.gif');
+        요리대표사진설정('');
         navigate('/');
       });
       
