@@ -9,6 +9,9 @@ import Recipe from './routes/Recipe';
 import Upload from './routes/Upload';
 import MyPost from './routes/MyPost';
 import Menus from './components/Menus';
+import ChangePhoto from './routes/ChangePhoto';
+import NewPassword from './routes/NewPassword';
+import Detail from './routes/Detail';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path='/myPost' element={<MyPost></MyPost>}></Route>
         <Route path='/recipe' element={<Menus></Menus>}></Route>
         <Route path='/recipe/:category' element={<Recipe></Recipe>}></Route>
+        <Route path='/changePhoto' element={<ChangePhoto></ChangePhoto>}></Route>
+        <Route path='/newPassword' element={<NewPassword></NewPassword>}></Route>
+        <Route path='/detail' element={<Detail></Detail>}></Route>
       </Routes>
     </div>
   );

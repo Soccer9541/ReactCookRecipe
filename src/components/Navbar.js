@@ -14,7 +14,7 @@ function Navbar(){
       // Sign-out successful.
       console.log(result);
       console.log('로그아웃 완료!')
-      // navigate('/');
+      navigate('/');
     }).catch((error) => {
       // An error happened.
       console.log(error);
@@ -37,7 +37,7 @@ function Navbar(){
         setPhoto(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
       }
     })
-  },[])
+  })
 
   
   

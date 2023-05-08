@@ -3,24 +3,30 @@ import { getDocs,collection } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState,useEffect } from "react";
 import styles from './Recipe.module.css';
+import { useNavigate } from "react-router-dom";
 
 
 function Recipe(){
   
   let {category} =useParams();
-
+  let navigate = useNavigate();
   let [카테고리별글목록,카테고리별글목록설정]=useState([]);
 
   let FB글목록= async function(){
     let array =[];
     const querySnapshot = await getDocs(collection(db, "post"));
     querySnapshot.forEach((doc) => {
-      array.push(doc.data());
+      let 사본 = {...doc.data()};
+      사본.페이지id=doc.id;
+      array.push(사본);
+      // array.push(doc.data());
+      // console.log(doc.id);
     });
     let copy =[...array];
     let myList= copy.filter((item)=>{
       return item.category === category;
     })
+    console.log(array);
     카테고리별글목록설정(myList);
   }
 
@@ -36,7 +42,7 @@ function Recipe(){
         카테고리별글목록.map((a,i)=>{
           
           return (
-            <div key={i}>
+            <div onClick={()=>{navigate(`/detail?id=${a.페이지id}`)}} key={i}>
               <div className={styles.product}>
                 <div className={styles.thumbnail}>
                   <img src={a.사진} alt="요리사진" />

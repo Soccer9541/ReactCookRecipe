@@ -16,7 +16,9 @@ function MyPost(){
     let array =[];
     const querySnapshot = await getDocs(collection(db, "post"));
     querySnapshot.forEach((doc) => {
-      array.push(doc.data());
+      let 사본 = {...doc.data()};
+      사본.페이지id=doc.id;
+      array.push(사본);
     });
     let copy =[...array];
     let myList= copy.filter((item)=>{
@@ -55,7 +57,7 @@ function MyPost(){
         내글정보.map((a,i)=>{
           
           return (
-            <div key={i}>
+            <div onClick={()=>{navigate(`/detail?id=${a.페이지id}`)}} key={i}>
               <div className={styles.product}>
                 <div className={styles.thumbnail}>
                   <img src={a.사진} alt="요리대표사진" />

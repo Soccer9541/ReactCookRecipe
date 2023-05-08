@@ -1,0 +1,26 @@
+.changePhotoArea{
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  border: 1px solid green;
+}
+
+.changePhotoArea input{
+  padding: 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 10px;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.profileImg{
+  margin-bottom: 20px;
+}
+
+.profileImg *{
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-position: center;
+}

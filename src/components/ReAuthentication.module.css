@@ -1,0 +1,12 @@
+#reAuthArea button{
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+#reAuthArea input{
+  padding: 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 10px;
+  border-radius: 1rem;
+  width: 100%;
+}

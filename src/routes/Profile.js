@@ -51,8 +51,8 @@ function Profile(){
         <div className={styles.settings}>
           <p>계정</p>
           <ul className="menu menu-compact bg-base-100 w-56 p-2 rounded-box">
-            <li><a>비밀번호 변경</a></li>
-            <li><a>프로필 사진 변경</a></li>
+            <li onClick={()=>{navigate('/newPassword')}}><a>비밀번호 변경</a></li>
+            <li onClick={()=>{navigate('/changePhoto')}}><a>프로필 사진 변경</a></li>
             <li onClick={()=>{회원탈퇴()}}><a>회원 탈퇴</a></li>
           </ul>
         </div>
