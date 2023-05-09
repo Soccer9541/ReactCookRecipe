@@ -1,9 +1,12 @@
 import styles from './ChangePhoto.module.css';
 import { useState } from 'react';
-import { getAuth, updateProfile, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { getAuth, updateProfile, EmailAuthProvider, reauthenticateWithCredential, onAuthStateChanged } from 'firebase/auth';
 import { getStorage,ref,uploadBytes,getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import ReAuthentication from '../components/ReAuthentication';
+import { useEffect } from 'react';
+import { getDocs, collection, doc,getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 
 function ChangePhoto(){
@@ -50,13 +53,15 @@ function ChangePhoto(){
 
     console.log('Profile updated successfully!');
     console.log('Image URL:', photoURL);
-
+    return photoURL
   }
 
   let 프로필사진변경 = async function(){
     let fileImage = document.querySelector('#uploadFile').files[0];
     await 프로필업데이트(fileImage)
-    .then(()=>{
+    .then((사진)=>{
+      console.log(사진)
+      FireBaseUserDbProfileUpdate(사진)
       alert('프로필 사진 변경 완료!');
       setImageSrc(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
       navigate('/profile');
@@ -81,6 +86,37 @@ function ChangePhoto(){
       alert('이메일 또는 비밀번호를 다시 한 번 확인해주세요.');
     }
   }
+
+  let FireBaseUserDbProfileUpdate = async function(photo){
+    const 회원가입DB = await getDocs(collection(db, "users"));
+    
+    let obj={};
+    회원가입DB.forEach((doc)=>{
+      console.log(doc.id , doc.data())
+      obj[doc.id] = doc.data()
+    });
+    console.log(obj);
+    const asArray = Object.entries(obj);
+    console.log(asArray);
+
+    const filtered = asArray.filter(([key, value]) => value.uid ===user.uid);
+    const justStrings = Object.fromEntries(filtered);
+    console.log(justStrings);
+    const userDocumentID = Object.keys(justStrings)[0]; //해당하는 회원 문서의 id
+    console.log(userDocumentID)
+
+    const 해당문서 = doc(db, "users", userDocumentID);
+    // To update age and favorite color:
+    await updateDoc(해당문서, {
+      "photo" : photo
+    });
+    
+  }
+
+  useEffect(()=>{
+    // FireBaseUserDbProfileUpdate()
+    
+  })
 
 
   return(

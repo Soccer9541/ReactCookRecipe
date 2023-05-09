@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import styles from './Profile.module.css';
 import { getAuth, onAuthStateChanged, deleteUser  } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 function Profile(){
   const auth = getAuth();
@@ -10,7 +13,14 @@ function Profile(){
   let [userName,setUserName]= useState('');
   let [photo,setPhoto]=useState(process.env.PUBLIC_URL + '/images/puppy.jpg');
 
-  function 회원탈퇴(){
+  let 회원탈퇴 = async function (){
+    await 회원정보가져오기()
+    .then((id)=>{
+      console.log(id);
+      deleteDoc(doc(db, "users", id));
+      console.log(user.uid + "삭제 완료")
+    })
+
     deleteUser(user).then(() => {
       // User deleted.
       alert('회원 탈퇴 완료!');
@@ -20,12 +30,25 @@ function Profile(){
     });
   }
 
+  let 회원정보가져오기 = async function(){
+    const querySnapshot = await getDocs(collection(db, "users"));
+    let id = ''
+    querySnapshot.forEach((doc) => {
+      if(doc.data().uid === user.uid){
+        id = doc.id
+      }
+    });
+    console.log(id);
+    return id;
+  }
+
   useEffect(()=>{
-    
+    회원정보가져오기();
     onAuthStateChanged(auth,(user)=>{
       if(user){
         setUserName(user.email);
         setPhoto(user.photoURL);
+        
       } else{
         setUserName('');
         setPhoto(process.env.PUBLIC_URL + '/images/puppy.jpg');

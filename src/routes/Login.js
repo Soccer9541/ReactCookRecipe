@@ -45,7 +45,6 @@ function Login(){
     onAuthStateChanged(auth,(user)=>{
       if(user){
         setLoginStatus(true);
-        console.log(user);
       } else{
         setLoginStatus(false);
       }

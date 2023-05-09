@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import styles from "./Signup.module.css";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import 이메일형식체크 from "../functions/idCheck";
@@ -40,7 +42,7 @@ function Signup(){
 
     console.log('Profile updated successfully!');
     console.log('Image URL:', photoURL);
-
+    return photoURL;
   }
 
 
@@ -80,8 +82,10 @@ function Signup(){
   }
 
   let 회원가입 = async function(){
+    const result = await createUserWithEmailAndPassword(auth,email,password);
     let fileImage = document.querySelector('#uploadFile').files[0];
-    console.log(fileImage)
+    const 날짜 = new Date();
+
     if(fileImage==null){
       alert('이미지를 업로드해라 ㅅㄱ');
       return
@@ -90,33 +94,47 @@ function Signup(){
       alert('중복 검사를 먼저 진행해 주세요.');
       return
     }
-    
-    if(이메일형식체크(email) && password===passwordConfirm && 패스워드형식체크(password)){
-      const result = await createUserWithEmailAndPassword(auth,email,password);
+    if(!이메일형식체크(email)){
+      alert('이메일 형식맞춰라');
+      return
+    }
+    if(password!==passwordConfirm){
+      alert('비번 안 맞는다.');
+      return
+    }
+    if(!패스워드형식체크(password)){
+      alert('비번 형식을 맞춰주세용');
+      return
+    }
+    await 프로필업데이트(fileImage)
+    await updateProfile(auth.currentUser,{displayName :  userName})
+    try{
       
-      await updateProfile(auth.currentUser,{displayName :  userName})
+      await addDoc(collection(db, "users"),{
+        name : result.user.displayName,
+        email : result.user.email,
+        uid : result.user.uid,
+        photo : result.user.photoURL,
+        가입일 : `${날짜.getFullYear()}년 ${날짜.getMonth()+1}월 ${날짜.getDate()}일`
+      })
       .then(()=>{
         navigate('/');
         setEmail('');
         setPassword('');
         setEmailCheck(false);
         setUserName('');
-        프로필업데이트(fileImage);
         setImageSrc(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
+        signOut(auth);
+        alert(result.user.email + '님 회원가입을 축하드립니다!');
+        console.log(result.user);
       })
-      .then(()=>{signOut(auth)});
-      alert(result.user.email + '님 회원가입을 축하드립니다!');
-      console.log(result.user);
-      
-    } else if(!이메일형식체크(email)){
-      alert('이메일 형식맞춰라');
-    } else if(password!==passwordConfirm){
-      alert('비번 안 맞는다.')
-    } else if(!패스워드형식체크(password)){
-      alert('비번 형식을 맞춰주세용')
+    }
+    catch(e){
+      console.log(e)
     }
     
   }
+
 
 
   return (

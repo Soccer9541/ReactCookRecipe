@@ -26,7 +26,6 @@ function Recipe(){
     let myList= copy.filter((item)=>{
       return item.category === category;
     })
-    console.log(array);
     카테고리별글목록설정(myList);
   }
 
