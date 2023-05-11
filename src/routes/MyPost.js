@@ -21,6 +21,7 @@ function MyPost(){
       array.push(사본);
     });
     let copy =[...array];
+    
     let myList= copy.filter((item)=>{
       return item.작성자 === auth.currentUser.uid;
     })
@@ -45,7 +46,7 @@ function MyPost(){
       }
     })
 
-  })
+  },[])
 
   return (
     <div>

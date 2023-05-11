@@ -12,6 +12,7 @@ import Menus from './components/Menus';
 import ChangePhoto from './routes/ChangePhoto';
 import NewPassword from './routes/NewPassword';
 import Detail from './routes/Detail';
+import Modify from './routes/Modify';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={ <Signup></Signup> } />
         <Route path='/profile' element={<Profile></Profile>}></Route>
         <Route path='/write' element={<Upload></Upload>}></Route>
+        <Route path='/modify/:postDocID' element={<Modify></Modify>}></Route>
         <Route path='/myPost' element={<MyPost></MyPost>}></Route>
         <Route path='/recipe' element={<Menus></Menus>}></Route>
         <Route path='/recipe/:category' element={<Recipe></Recipe>}></Route>

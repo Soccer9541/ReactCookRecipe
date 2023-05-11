@@ -49,7 +49,7 @@ function Login(){
         setLoginStatus(false);
       }
     })
-  })
+  },[])
 
 
   return(

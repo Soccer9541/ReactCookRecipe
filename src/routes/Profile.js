@@ -43,7 +43,7 @@ function Profile(){
   }
 
   useEffect(()=>{
-    회원정보가져오기();
+    // 회원정보가져오기();
     onAuthStateChanged(auth,(user)=>{
       if(user){
         setUserName(user.email);
