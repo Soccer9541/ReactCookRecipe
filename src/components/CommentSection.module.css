@@ -1,0 +1,92 @@
+.commentArea{
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 70%;
+}
+
+.commentCount{
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+textarea{
+  padding: 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 10px;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+
+
+.commentWrite{
+  margin-bottom: 30px;
+}
+
+.commentWrite button{
+  float: right;
+}
+
+.replysection{
+  /* border: 1px solid red; */
+  margin-bottom: 10px;
+  display: flex;
+  padding: 20px;
+}
+
+.left{
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  box-sizing: border-box;
+  /* border: 1px solid green; */
+  width: 100px;
+}
+
+.left p{
+  text-align: center;
+  
+}
+
+.writerProfile{
+  
+  display: block;
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+
+
+.replyContent{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+
+.replyContent textarea{
+  padding: 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 10px;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.buttonArea{
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+.showInput{
+  display: block;
+}
