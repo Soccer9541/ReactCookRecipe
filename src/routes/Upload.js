@@ -90,7 +90,6 @@ function Upload(){
       alert('로그인을 하셔야 글 작성이 가능합니다.');
       navigate('/login');
     }
-
   }
 
   let 단계추가 = async function(){
