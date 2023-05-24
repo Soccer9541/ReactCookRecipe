@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged,signOut } from "firebase/auth";
+import { getDocs,collection } from "firebase/firestore";
+import { db } from "../firebase";
+import styles from './Navbar.module.css';
+import { Link } from "react-router-dom";
+
+
 
 function Navbar(){
   let navigate = useNavigate();
@@ -8,12 +14,66 @@ function Navbar(){
   let [userName,setUserName]=useState('');
   let [loginStatus,setLoginStatus] = useState(false);
   let [photo,setPhoto]=useState(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
+  let 현재유저상태 = JSON.parse(localStorage.getItem('user'));
+  
+  let [검색어,검색어설정] = useState('');
+  let [검색된목록,검색된목록설정] = useState([]);
+  let [검색창상태,검색창상태설정] = useState(false);
+  let [FB글목록,FB글목록설정]=useState([]);
 
+  let [theme,setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
+
+  let 테마교체 = (e) =>{
+    if(e.target.checked){
+      setTheme('dark');
+    }
+    else{
+      setTheme('light');
+    }
+  }
+
+  let FB정보가져오기 = async function(){
+    let array =[];
+    const querySnapshot = await getDocs(collection(db, "post"));
+    querySnapshot.forEach((doc) => {
+      let 사본 = {...doc.data()};
+      사본.페이지id=doc.id;
+      array.push(사본);
+    });
+    let copy =[...array];
+        
+    FB글목록설정(copy);
+
+  }
+
+
+
+  let 검색기능 = (e) =>{
+    검색어설정(e.target.value);
+
+    //파이어베이스의 post 데이터 먼저 받아와서 설정해야함.
+    let list = FB글목록.filter((searchitem)=>{
+      if(searchitem.title.toLowerCase().includes(e.target.value.toLowerCase())){
+        return(
+          <li>{searchitem.title}</li>
+        )
+      }
+    })
+
+    검색된목록설정(list);
+    검색창상태설정(true);
+
+    if(e.target.value === ''){
+      검색창상태설정(false)
+    }
+  }
+  
   let 로그아웃 = function(){
     signOut(auth).then((result) => {
       // Sign-out successful.
       console.log(result);
-      console.log('로그아웃 완료!')
+      alert('로그아웃 완료!')
+      localStorage.setItem('user',JSON.stringify({uid:'비로그인방문자'}));
       navigate('/');
     }).catch((error) => {
       // An error happened.
@@ -21,11 +81,11 @@ function Navbar(){
     });
   }
 
-  
-  
+
 
   useEffect(()=>{
     
+    FB정보가져오기();
     onAuthStateChanged(auth,(user)=>{
       if(user){
         setLoginStatus(true);
@@ -37,7 +97,14 @@ function Navbar(){
         setPhoto(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
       }
     })
-  })
+  },[])
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    const localTheme = localStorage.getItem('theme');
+    // document.querySelector('html').setAttribute('data-theme', localTheme);
+    document.querySelector('.App').setAttribute('data-theme', localTheme);
+  }, [theme])
 
   
   
@@ -45,10 +112,9 @@ function Navbar(){
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">집밥의 민족</a>
-        <button className="btn btn-ghost" onClick={()=>{navigate('/')}}>Home</button>
-        <button className="btn btn-ghost" onClick={()=>{navigate('/login')}}>로그인 페이지 </button>
-        <button className="btn btn-ghost" onClick={()=>{navigate('/signup')}}> 회원가입</button>
+        
+        <button className="btn btn-ghost normal-case text-xl" onClick={()=>{navigate('/')}}>집밥의 민족</button>
+        
         
         {
           loginStatus === true? 
@@ -58,15 +124,54 @@ function Navbar(){
           </>
           
           :
-          null
+          <>
+            <button className="btn btn-ghost" onClick={()=>{navigate('/login')}}>로그인</button>
+            <button className="btn btn-ghost" onClick={()=>{navigate('/signup')}}> 회원가입</button>
+          </>
         }
         
         <button className="btn btn-ghost" onClick={()=>{navigate('/recipe')}}>메뉴 페이지</button>
         
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
-          <input type="text" placeholder="Search" className="input input-bordered" />
+        <div style={{marginRight : '20px'}}>
+          
+          {
+            현재유저상태.uid !== '비로그인방문자' ?
+            <>
+              <span>{현재유저상태.displayName} 님</span>
+            </>
+            :
+            <>
+              로그인을 해주세요
+            </>
+          }
+        </div>
+        <label className="swap swap-rotate">
+          <input type="checkbox"
+          onChange={테마교체}
+          checked ={theme === 'light' ? false : true}
+          />
+          <svg className="swap-on fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
+          <svg className="swap-off fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>        
+        </label>
+        <div className="form-control" style={{position : 'relative'}}>
+          <input type="text" placeholder="Search" className="input input-bordered" id='inputBox'
+          value={검색어} onChange={(e)=>{검색기능(e)}}
+          />
+          <ul className={styles.searchBox}>
+            {
+              검색된목록.map((item,i)=>{
+                if(검색창상태){
+                  return(
+                    <li key={i} tabIndex={0}>
+                      <a href={`/detail?id=${item.페이지id}`}>{item.title}</a>
+                    </li>
+                  )
+                }
+              })
+            }
+          </ul>
         </div>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -83,7 +188,10 @@ function Navbar(){
                 <li onClick={()=>{로그아웃()}}><a>Logout</a></li>
               </>
               :
-              <li onClick={()=>{navigate('/login')}}><a>Login</a></li>
+              <>
+                <li onClick={()=>{navigate('/login')}}><a>Login</a></li>
+                <li onClick={()=>{navigate('/signup')}}><a>SignUp</a></li>
+              </>
             }
             
           </ul>
