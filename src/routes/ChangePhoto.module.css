@@ -1,11 +1,20 @@
-.changePhotoArea{
+#changePhotoArea{
   max-width: 500px;
   margin: 0 auto;
   margin-top: 30px;
-  border: 1px solid green;
+  padding: 20px;
+  /* height: 500px; */
+  margin-bottom: 30px;
+  border: 1px solid lightblue;
 }
 
-.changePhotoArea input{
+#changePhotoArea p{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#changePhotoArea input{
   padding: 10px;
   border: 1px solid lightblue;
   margin-bottom: 10px;

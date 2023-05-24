@@ -121,8 +121,8 @@ function ChangePhoto(){
 
   return(
     <div>
-      <div className={styles.changePhotoArea}>
-        프로필 사진 바꾸기
+      <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100" id={styles.changePhotoArea}>
+        <p>프로필 사진 바꾸기</p>
         <form action="">
           <div>
             <span>프로필</span>
