@@ -1,8 +1,10 @@
-.signupArea{
-  max-width: 500px;
+#signupArea{
+  max-width: 600px;
   margin: 0 auto;
   margin-top: 30px;
-  border: 1px solid green;
+  border: 1px solid lightblue;
+  margin-bottom: 30px;
+  padding: 20px;
 }
 
 .title{
@@ -24,7 +26,7 @@
   background-position: center;
 }
 
-.signupArea select{
+#signupArea select{
   display: block;
   padding: 10px;
   border: 1px solid lightblue;
@@ -34,22 +36,25 @@
 }
 
 
-.signupArea input{
+#signupArea input{
   padding: 10px;
   border: 1px solid lightblue;
   margin-bottom: 10px;
   border-radius: 1rem;
-  width: 100%;
+  width: 80%;
+  text-align: center;
 }
 
-.signupArea .emailNew{
-  width: 80%;
-  float: left;
+input:hover,
+select:hover,
+textarea:hover{
+  cursor: pointer;
 }
 
 #check{
-  width: 20%;
-  float: left;
+  margin-bottom: 20px;
+  border-radius: 1rem;
+  width: 80%;
 }
 
 .avatar{

@@ -87,7 +87,7 @@ function Signup(){
     const 날짜 = new Date();
 
     if(fileImage==null){
-      alert('이미지를 업로드해라 ㅅㄱ');
+      alert('이미지를 업로드해주세요.');
       return
     }
     if(!emailCheck){
@@ -95,15 +95,15 @@ function Signup(){
       return
     }
     if(!이메일형식체크(email)){
-      alert('이메일 형식맞춰라');
+      alert('이메일 형식을 지켜주세요.');
       return
     }
     if(password!==passwordConfirm){
-      alert('비번 안 맞는다.');
+      alert('비밀번호가 일치하지 않습니다.');
       return
     }
     if(!패스워드형식체크(password)){
-      alert('비번 형식을 맞춰주세용');
+      alert('비밀번호 형식을 지켜주세요');
       return
     }
     await 프로필업데이트(fileImage)
@@ -139,12 +139,12 @@ function Signup(){
 
   return (
     <div>
-      <div className={styles.signupArea}>
+      <div className='card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100' id={styles.signupArea}>
         <form action="">
           <h1 className={styles.title}>회원가입</h1>
 
           <div>
-            <span>프로필</span>
+            <p>프로필</p>
             <input type="file" id="uploadFile" onChange={(e)=>{e.preventDefault();사진미리보기(e)}} />
             <div className={styles.profileImg}>
               {imageSrc && <img src={imageSrc} alt="Preview" />}
@@ -152,28 +152,30 @@ function Signup(){
           </div>
 
           <div>
-            <span>이름</span>
+            <p>이름</p>
             <input type="text" name='이름' id = 'userName' placeholder="이름" onChange={(e)=>{setUserName(e.target.value);}}/>
           </div>
           
           <div>
-            <span style={{display : 'block'}}>이메일</span>
+            <p style={{display : 'block'}}>이메일</p>
             <input className={styles.emailNew} type="text" name="이메일" id='idNew' placeholder="이메일을 입력하세요." onChange={(e)=>{setEmail(e.target.value);}}/>
-            <button className="btn" id={styles.check} onClick={(e)=>{e.preventDefault();이메일중복검사(email)}}>중복 검사</button>
-            <div style={{clear :'both'}}></div>
+            
+            <div style={{clear :'both'}}>
+              <button className="btn btn-primary" id={styles.check} onClick={(e)=>{e.preventDefault();이메일중복검사(email)}}>Email 중복 검사</button>
+            </div>
           </div>
           
           <div>
-            <span>비밀번호(8~10자리사이 영어와 숫자조합)</span>
+            <p>비밀번호(8~10자리사이 영어와 숫자조합)</p>
             <input type="password" name="패스워드" id='pwNew' placeholder="패스워드를 입력하세요." onChange={(e)=>{setPassword(e.target.value);}}/>
           </div>
 
           <div>
-            <span>비밀번호확인</span>
+            <p>비밀번호확인</p>
             <input type="password" name="패스워드" id='pwConfirmNew' placeholder="패스워드를 다시 한 번 입력하세요." onChange={(e)=>{setPasswordConfirm(e.target.value);}}/>
           </div>
           
-          <button type="submit" className="btn btn-outline" onClick={(e)=>{e.preventDefault();회원가입()}}>회원가입하기</button>
+          <button style={{marginTop : '20px'}} type="submit" className="btn btn-outline" onClick={(e)=>{e.preventDefault();회원가입()}}>회원가입하기</button>
         </form>
       </div>
     </div>
