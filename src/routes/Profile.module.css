@@ -1,20 +1,21 @@
-.profileArea{
+#profileArea{
   max-width: 500px;
-  border: 1px solid blue;
+  border: 1px solid lightblue;
   margin: 0 auto;
   margin-top: 50px;
-}
-
-.myInfo{
-  border: 1px solid red;
-  
+  margin-bottom: 30px;
+  padding: 20px;
 }
 
 .settings,
 .history{
-  border: 1px solid green;
   margin-top: 20px;
-  
+}
+
+.settings p,
+.history p{
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .settings ul,
@@ -22,4 +23,8 @@
 .history ul,
 .history ul li{
   margin: 0 auto;
+}
+
+.myInfo{
+  margin-bottom: 20px;
 }
