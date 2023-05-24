@@ -1,10 +1,21 @@
-.loginArea{
+
+#loginArea{
   max-width: 500px;
   margin: 0 auto;
-  margin-top: 30px;
-  border: 1px solid green;
+  margin-top: 50px;
+  border: 1px solid lightblue;
+  margin-bottom: 50px;
+  padding: 20px;
 }
 
+#loginArea img{
+  scale : 1.0;
+  transition: all .3s;
+}
+
+#loginArea img:hover{
+  scale : 1.2;
+}
 
 .title{
   font-size: 3rem;
@@ -23,3 +34,10 @@
   width: 100%;
 }
 
+.signUp{
+  color: blue;
+}
+
+.signUp:hover{
+  text-decoration: underline;
+}

@@ -24,7 +24,8 @@ function Login(){
       alert('로그인 완료');
       setEmail('');
       setPassword('');
-      navigate('/')
+      navigate('/');
+      localStorage.setItem('user',JSON.stringify(auth.currentUser))
     })
     .catch(()=>{alert('아이디나 비번이 맞지 않읍니다.')});
     
@@ -35,6 +36,7 @@ function Login(){
   let 구글로그인 = function () {
     signInWithPopup(auth, provider)
       .then((result) => {
+        localStorage.setItem('user',JSON.stringify(auth.currentUser))
         navigate('/')
       }).catch((error) => {
         console.log(error)
@@ -53,19 +55,19 @@ function Login(){
 
 
   return(
-    <div>
-      <div className={styles.loginArea}>
+    <div className={styles.loginComponent}>
+      <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100" id={styles.loginArea}>
         <form>
           <h1 className={styles.title}>집밥의 민족</h1>
-          {loginStatus === true ? '로그인됨': '로그아웃상태'}
+          
           <div className={styles.emailInput}>
-            <input type="text" name="이메일" id='email' placeholder='이메일' onChange={(e)=>{setEmail(e.target.value);}}/>
+            <input type="text" name="이메일" id='email' placeholder='Email' onChange={(e)=>{setEmail(e.target.value);}}/>
           </div>
           <div className={styles.pwInput}>
-            <input type="password" name="패스워드" id='pw' placeholder='패스워드' onChange={(e)=>{setPassword(e.target.value);}}/>
+            <input type="password" name="패스워드" id='pw' placeholder='Password' onChange={(e)=>{setPassword(e.target.value);}}/>
           </div>
           
-          <div className='flex justify-center items-center'>
+          <div className='flex justify-center items-center mb-3'>
             <button id='login' className="btn btn-outline" type="submit" onClick={(e)=>{e.preventDefault();로그인()}}>로그인하기</button>
           </div>
 
@@ -75,15 +77,15 @@ function Login(){
               <img src={process.env.PUBLIC_URL + '/images/googleBtn.png'} alt="Example" />
             </button>
             <div style={{marginTop : '20px'}}>
-              <span>
-                계정이 없으신가요? <Link to={'/signup'}>회원가입</Link>
-              </span>
+              <div>
+                계정이 없으신가요? <Link to="/signup" className={styles.signUp}>회원가입</Link>
+              </div>
             </div>
           </div>
-          <hr />
+          
         </form>
       </div>
-      
+
     </div>
   )
 }
