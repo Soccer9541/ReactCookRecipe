@@ -211,9 +211,7 @@ function Detail(){
         {
           작성자프로필 !==null ? 
           <div className={styles.writerProfile}>
-            <Link to='/profile'>
-              <img src={작성자사진} alt="작성자프로필사진" className={styles.uploaderProfile}/>
-            </Link>
+            <img src={작성자사진} alt="작성자프로필사진" className={styles.uploaderProfile}/>
             <p style={{fontWeight : '700'}}>작성자 : {작성자이름}님</p>
           </div>
           :
@@ -237,9 +235,7 @@ function Detail(){
             </button>
           </>
           :
-          <>
-            <p>좋아요기능 이용불가</p>
-          </>
+          null
         }
       </div>
 
@@ -282,18 +278,18 @@ function Detail(){
 
       <div className={styles.stepArea}>
         {
-          작성자프로필.단계별내용 !== undefined ?
+          페이지상세정보.단계별내용 !==undefined ?
           
-          작성자프로필.단계별내용.map((a,i)=>{
+          페이지상세정보.단계별내용.map((a,i)=>{
             return(
               <div key={i}>
                 <div className={styles.stepByStep}>
                   <div className={styles.stepNumber}>{i+1}</div>
-                  <p>{작성자프로필.단계별내용[i] ? 작성자프로필.단계별내용[i] : <>내용을 입력해주세요.</>}</p>
+                  <p>{페이지상세정보.단계별내용[i] ? 페이지상세정보.단계별내용[i] : <>내용을 입력해주세요.</>}</p>
                   <div style={{grow : '1'}}></div>
                 </div>
                 <div>
-                  <img className={styles.stepphoto} src={작성자프로필.단계별추가사진[i] ? 작성자프로필.단계별추가사진[i] : process.env.PUBLIC_URL + '/images/addPhoto.gif'} alt={`단계${i+1}사진`} />
+                  <img className={styles.stepphoto} src={페이지상세정보.단계별추가사진[i] ? 페이지상세정보.단계별추가사진[i] : process.env.PUBLIC_URL + '/images/addPhoto.gif'} alt={`단계${i+1}사진`} />
                 </div>
                 <hr />
               </div>
@@ -335,3 +331,4 @@ function Detail(){
 }
 
 export default Detail;
+
