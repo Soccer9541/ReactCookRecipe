@@ -1,11 +1,11 @@
-import Carousel from "../components/Carousel";
-import Menus from "../components/Menus";
+import CarouselArea from "../components/Carousel";
 
 function Home(){
+
+  
   return (
     <div>
-      <Carousel></Carousel>
-      <Menus></Menus>
+      <CarouselArea></CarouselArea>
     </div>
   )
 }
