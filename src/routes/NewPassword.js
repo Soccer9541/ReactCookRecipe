@@ -79,9 +79,9 @@ function NewPassword(){
 
 
   return(
-    <div>
-      <div className={styles.pwArea}>
-        비밀번호 재설정 페이지
+    <div style={{height :'400px'}}>
+      <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100" id={styles.pwArea}>
+        <p>비밀번호 재설정</p>
         <form action="">
           <div>
             <div>
@@ -97,21 +97,7 @@ function NewPassword(){
           <button type="submit" className='btn btn-outline' onClick={(e)=>{비밀번호변경(e)}}>비밀번호변경</button>
         </form>
 
-        {/* 여기에 사용자 재인증 모달창 띄우면 됨 */}
-        {/* <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">사용자 재인증</h3>
-            <div>
-              <span>이메일</span>
-              <input type="email" value={재인증이메일} placeholder='이메일을 다시 입력해주세요.' onChange={(e) => 재인증이메일설정(e.target.value)}/>
-            </div>
-            <div>
-              <span>비밀번호</span>
-              <input type="password" value={재인증패스워드} placeholder='비밀번호를 다시 입력해주세요.' onChange={(e) => 재인증패스워드설정(e.target.value)}/>
-            </div>
-            <button htmlFor="my-modal" className="btn btn-outline" onClick={(e)=>{재인증하기(e)}}>사용자 재인증</button>
-          </div>
-        </div> */}
+        
         <ReAuthentication 재인증이메일={재인증이메일} 재인증이메일설정={재인증이메일설정} 재인증패스워드 ={재인증패스워드} 재인증패스워드설정 = {재인증패스워드설정} 재인증하기 = {재인증하기}></ReAuthentication>
       </div>
     </div>
