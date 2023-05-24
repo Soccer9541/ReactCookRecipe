@@ -1,8 +1,10 @@
-.modifyArea{
-  max-width: 500px;
+#modifyArea{
+  max-width: 600px;
   margin: 0 auto;
   margin-top: 30px;
-  border: 1px solid green;
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid lightblue;
 }
 
 .title{
@@ -13,9 +15,15 @@
   
 }
 
-.modifyArea input,
-.modifyArea select,
-.modifyArea textarea
+.step{
+  font-size: 20px;
+  font-weight: 700;
+  padding-left: 10px;
+}
+
+#modifyArea input,
+#modifyArea select,
+#modifyArea textarea
 {
   padding: 10px;
   border: 1px solid lightblue;
