@@ -12,10 +12,15 @@ import { db } from '../firebase';
 function ChangePhoto(){
   const auth = getAuth();
   const user = auth.currentUser;
+  let [userName,setUserName]=useState('');
+  let [loginStatus,setLoginStatus] = useState(false);
+  let [photo,setPhoto]=useState(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
   const [imageSrc, setImageSrc] = useState(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
   let navigate = useNavigate();
   let [재인증이메일,재인증이메일설정]= useState('');
   let [재인증패스워드,재인증패스워드설정]= useState('');
+
+  let 현재유저상태 = JSON.parse(localStorage.getItem('user'));
 
   let 사진미리보기 = function(event){
     const file = event.target.files[0];
@@ -61,6 +66,8 @@ function ChangePhoto(){
     await 프로필업데이트(fileImage)
     .then((사진)=>{
       console.log(사진)
+      localStorage.setItem('프로필사진',JSON.stringify(사진))
+      
       FireBaseUserDbProfileUpdate(사진)
       alert('프로필 사진 변경 완료!');
       setImageSrc(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
@@ -113,10 +120,22 @@ function ChangePhoto(){
     
   }
 
-  useEffect(()=>{
-    // FireBaseUserDbProfileUpdate()
+  // useEffect(()=>{
     
-  })
+  //   onAuthStateChanged(auth,(user)=>{
+  //     if(user){
+  //       setLoginStatus(true);
+  //       setUserName(user.displayName);
+  //       setPhoto(user.photoURL);
+        
+  //     } else{
+  //       setLoginStatus(false);
+  //       setUserName('');
+  //       setPhoto(process.env.PUBLIC_URL + '/images/profileDefualt.jpg');
+  //     }
+  //   })
+  // },[])
+
 
 
   return(

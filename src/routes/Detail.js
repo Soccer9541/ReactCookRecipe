@@ -211,8 +211,8 @@ function Detail(){
         {
           작성자프로필 !==null ? 
           <div className={styles.writerProfile}>
-            <img src={작성자사진} alt="작성자프로필사진" className={styles.uploaderProfile}/>
-            <p style={{fontWeight : '700'}}>작성자 : {작성자이름}님</p>
+            <img src={작성자사진 ? 작성자사진 : process.env.PUBLIC_URL + '/images/profileDefualt.jpg'} alt="작성자프로필사진" className={styles.uploaderProfile}/>
+            <p style={{fontWeight : '700'}}>작성자 : {작성자이름 ? 작성자이름 : 현재로그인유저.displayName}님</p>
           </div>
           :
           <>

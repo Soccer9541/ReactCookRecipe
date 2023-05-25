@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 function Profile(){
   const auth = getAuth();
@@ -27,11 +28,27 @@ function Profile(){
     deleteUser(user).then(() => {
       // User deleted.
       alert('회원 탈퇴 완료!');
+      로그아웃();
       navigate('/');
     }).catch((error) => {
       console.log(error)
     });
   }
+
+  let 로그아웃 = function(){
+    signOut(auth).then((result) => {
+      // Sign-out successful.
+      console.log(result);
+      alert('로그아웃 완료!')
+      localStorage.setItem('user',JSON.stringify({uid:'비로그인방문자'}));
+      localStorage.removeItem('프로필사진');
+      navigate('/');
+    }).catch((error) => {
+      // An error happened.
+      console.log(error);
+    });
+  }
+
 
   let 회원정보가져오기 = async function(){
     const querySnapshot = await getDocs(collection(db, "users"));

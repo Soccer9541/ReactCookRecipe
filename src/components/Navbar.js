@@ -74,6 +74,7 @@ function Navbar(){
       console.log(result);
       alert('로그아웃 완료!')
       localStorage.setItem('user',JSON.stringify({uid:'비로그인방문자'}));
+      localStorage.removeItem('프로필사진');
       navigate('/');
     }).catch((error) => {
       // An error happened.
@@ -86,11 +87,13 @@ function Navbar(){
   useEffect(()=>{
     
     FB정보가져오기();
+    
     onAuthStateChanged(auth,(user)=>{
       if(user){
         setLoginStatus(true);
         setUserName(user.displayName);
         setPhoto(user.photoURL);
+        
       } else{
         setLoginStatus(false);
         setUserName('');
@@ -106,6 +109,7 @@ function Navbar(){
     document.querySelector('.App').setAttribute('data-theme', localTheme);
   }, [theme])
 
+  
   
   
 
@@ -176,7 +180,8 @@ function Navbar(){
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={photo} alt="" />
+              <img src={JSON.parse(localStorage.getItem('프로필사진')) ? JSON.parse(localStorage.getItem('프로필사진')) : photo} alt="" />
+              {/* <img src={photo} alt="" /> */}
             </div>
           </label>
           <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">

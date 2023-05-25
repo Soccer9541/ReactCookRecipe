@@ -107,6 +107,7 @@ function MyPost(){
                   <div className={styles.thumbnail}>
                     <img src={a.사진} alt="요리대표사진" />
                   </div>
+                  {/* <div style={{grow : '1'}}></div> */}
                   <div className={styles.productContent}>
                     <h5 className="title"> 제목 : {a.title}</h5>
                     <p>카테고리 : {a.category}</p>

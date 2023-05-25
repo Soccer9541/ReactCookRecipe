@@ -21,7 +21,7 @@ function CommentSection(props) {
   let [댓글목록,댓글목록설정] = useState(해당페이지댓글가져오기);
   
   const [현재페이지,현재페이지설정] = useState(1); // 현재 페이지. default 값으로 1
-  const [한페이지당글갯수] = useState(5); // 한 페이지에 보여질 아이템 수   
+  const [한페이지당글갯수] = useState(20); // 한 페이지에 보여질 아이템 수   
   let [count,setCount] = useState(0);
   const [글마지막인덱스, 글마지막인덱스설정] = useState(0);
   const [글첫인덱스, 글첫인덱스설정] = useState(0);
@@ -133,7 +133,7 @@ function CommentSection(props) {
 
   return (
     <div className={styles.commentArea}>
-      <p className={styles.commentCount}>댓글 {현재페이지게시글목록.length}</p> 
+      <p className={styles.commentCount}>댓글 {해당페이지댓글가져오기.length}</p> 
       <div className={styles.commentWrite}>
         <textarea placeholder="댓글을 입력해주세요~" id="comment" cols="30" rows="5" value={댓글내용} onChange={(e)=>{댓글내용설정(e.target.value)}}>{텍스트내용}</textarea>
         <button className="btn btn-outline" onClick={댓글추가하기}>글쓰기</button>
@@ -144,7 +144,7 @@ function CommentSection(props) {
         현재페이지게시글목록 && 댓글목록.length>0 ?
 
         <>
-          {현재페이지게시글목록.map((a,i)=>{
+          {댓글목록.map((a,i)=>{
             return (
               <div key={i}>
                 {
@@ -164,7 +164,7 @@ function CommentSection(props) {
                             <button className="btn btn-outline" style={{marginRight : '10px'}} onClick={(e)=>{댓글수정기능(e,i)}}>
                               수정
                             </button>
-                            <button className="btn btn-outline" onClick={(e)=>{해당댓글삭제하기(e,i)}}>
+                            <button className="btn btn-outline" onClick={(e)=>{해당댓글삭제하기(e,i%5)}}>
                               삭제
                             </button>
 
@@ -203,7 +203,7 @@ function CommentSection(props) {
               </div>
             )
           })}
-          <Paging page={현재페이지} 표시되는페이지수={표시되는페이지수} 한페이지당글갯수={한페이지당글갯수} count={count} setPage={setPage}></Paging>
+          {/* <Paging page={현재페이지} 표시되는페이지수={표시되는페이지수} 한페이지당글갯수={한페이지당글갯수} count={count} setPage={setPage}></Paging> */}
 
         </>
         :
